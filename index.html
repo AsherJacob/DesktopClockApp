@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+    <div class="clock">
+
+      <div class="hour">
+        <div class="hr" id="hr"></div>
+      </div>
+
+      <div class="min">
+        <div class="mn" id="mn"></div>
+      </div>
+
+      <div class="sec">
+        <div class="sc" id="sc"></div>
+      </div>
+
+      <div class="digitalClock">
+        <div class="dhour" id="dhour"></div>
+        <div class="dmin" id="dmin"></div>
+        <div class="dsec" id="dsec"></div>
+        <div id="ampm"></div>
+      </div>
+
+    </div>
+
+    <script>
+      const hr = document.querySelector("#hr");
+      const mn = document.querySelector("#mn");
+      const sc = document.querySelector("#sc");
+
+      setInterval(() => {
+        var day = new Date();
+        var hourAngle = day.getHours() * 30;
+        var minuteAngle = day.getMinutes() * 6;
+        var secondAngle = day.getSeconds() * 6;
+
+        
+
+        hr.style.transform = `rotateZ(${hourAngle+(minuteAngle/12)}deg)`;
+        mn.style.transform = `rotateZ(${minuteAngle}deg)`;
+        sc.style.transform = `rotateZ(${secondAngle}deg)`;
+      
+        var hour = document.querySelector("#dhour");
+        var minute = document.querySelector("#dmin");
+        var second = document.querySelector("#dsec");
+        var ampm = document.querySelector("#ampm");
+
+        var dhr = day.getHours();
+        var dmn = day.getMinutes();
+        var dsc = day.getSeconds();
+        var dampm = "AM";
+
+        dsc = (dsc < 10 ) ? "0" + dsc : dsc;
+        dmn = (dmn < 10 ) ? "0" + dmn : dmn;
+        dhr = (dhr < 10 ) ? "0" + dhr : dhr;
+
+        if(dhr == 12){
+           dampm = "PM";
+        }
+
+        if(dhr > 12) {
+          dhr = dhr - 12;
+           dampm = "PM";
+        }
+
+        if (dhr == 0){
+          dampm = "AM";
+        }
+
+
+
+        hour.innerHTML = dhr+":";
+        minute.innerHTML = dmn+":";
+        second.innerHTML = dsc+"&nbsp";
+        ampm.innerHTML = dampm;
+
+
+      })
+
+    </script>
+
+  </body>
+</html>
